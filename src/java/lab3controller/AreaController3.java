@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lab1model.CalculateRectangleArea;
+import calculatorlabmodel.CalculateArea;
 
 /**
  *
@@ -34,12 +34,34 @@ public class AreaController3 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/html;charset=UTF-8");
-        double length = Double.parseDouble(request.getParameter("length"));
-        double height = Double.parseDouble(request.getParameter("height"));
+        String recLength = request.getParameter("length");
+        String recHeight = request.getParameter("height");
+        String radius = request.getParameter("radius");
+        String tBase = request.getParameter("base");
+        String tHeight = request.getParameter("tHeight");
+        String recArea = null;
+        String circleArea = null;
+        String triangleArea = null;
+        CalculateArea calculator = new CalculateArea();
         
-        CalculateRectangleArea calculator = new CalculateRectangleArea();
-        String area = Double.toString(calculator.getCalculatedArea(length, height));
-        request.setAttribute("result", area);
+        if (!(recLength.isEmpty()) && (!(recHeight.isEmpty()))){
+            double length = Double.parseDouble(recLength);
+            double height = Double.parseDouble(recHeight);
+            recArea = Double.toString(calculator.getCalculatedAreaRectangle(length, height));
+        }
+        if (!(radius.isEmpty())){
+            double cirRadius = Double.parseDouble(radius);
+            circleArea = Double.toString(calculator.getCalculatedAreaCircle(cirRadius));
+        }
+        if (!(tBase.isEmpty()) && (!(tHeight.isEmpty()))){
+            double base = Double.parseDouble(tBase);
+            double triHeight = Double.parseDouble(tHeight);
+            triangleArea = Double.toString(calculator.getCalculatedAreaTriangle(base, triHeight));
+        }
+
+        request.setAttribute("rectangle", recArea);
+        request.setAttribute("circle", circleArea);
+        request.setAttribute("triangle", triangleArea);
         RequestDispatcher view =
             request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);

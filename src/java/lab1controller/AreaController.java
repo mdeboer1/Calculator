@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import lab1model.CalculateRectangleArea;
+import calculatorlabmodel.CalculateArea;
 
 /**
  *
@@ -36,8 +36,8 @@ public class AreaController extends HttpServlet {
         double length = Double.parseDouble(request.getParameter("length"));
         double height = Double.parseDouble(request.getParameter("height"));
         
-        CalculateRectangleArea calculator = new CalculateRectangleArea();
-        String area = Double.toString(calculator.getCalculatedArea(length, height));
+        CalculateArea calculator = new CalculateArea();
+        String area = Double.toString(calculator.getCalculatedAreaRectangle(length, height));
         request.setAttribute("result", area);
         RequestDispatcher view =
             request.getRequestDispatcher(RESULT_PAGE);
