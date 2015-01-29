@@ -13,6 +13,7 @@ public class CalculateArea {
     private double rectangleArea;
     private double circleArea;
     private double triangleArea;
+    private final  int DIVIDE_BY_HALF = 2;
     
     public CalculateArea() {
     }
@@ -28,7 +29,7 @@ public class CalculateArea {
     }
     
     public final double getCalculatedAreaTriangle(double base, double height){
-        triangleArea = (base * height) / 2;
+        triangleArea = (base * height) / DIVIDE_BY_HALF;
         return triangleArea;
     }
 }

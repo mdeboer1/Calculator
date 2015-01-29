@@ -21,6 +21,9 @@ import calculatorlabmodel.CalculateArea;
 @WebServlet(name = "AreaController3", urlPatterns = {"/area3"})
 public class AreaController3 extends HttpServlet {
     private static final String RESULT_PAGE = "/lab3/form.jsp";
+    private static final String RECT_CALC = "rectangle";
+    private static final String CIRC_CALC = "circle";
+    private static final String TRI_CALC = "triangle";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,35 +36,88 @@ public class AreaController3 extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String recLength = request.getParameter("length");
-        String recHeight = request.getParameter("height");
-        String radius = request.getParameter("radius");
-        String tBase = request.getParameter("base");
-        String tHeight = request.getParameter("tHeight");
-        String recArea = null;
-        String circleArea = null;
-        String triangleArea = null;
+        String rectangle = request.getParameter("rectangle");
+        String circle = request.getParameter("circle");
+        String triangle = request.getParameter("triangle");
+        String recLength;
+        String recHeight;
+        String radius;
+        String tBase;
+        String tHeight;
+        String recArea;
+        String circleArea;
+        String triangleArea;
         CalculateArea calculator = new CalculateArea();
         
-        if (!(recLength.isEmpty()) && (!(recHeight.isEmpty()))){
-            double length = Double.parseDouble(recLength);
-            double height = Double.parseDouble(recHeight);
-            recArea = Double.toString(calculator.getCalculatedAreaRectangle(length, height));
+        if (rectangle != null && rectangle.equals(RECT_CALC)){
+            // add validation to check if empty, set attribute with a warning 
+            // message to be returned to result page
+            recLength = request.getParameter("length");
+            recHeight = request.getParameter("height");
+            if (recLength.isEmpty() || recHeight.isEmpty()){
+                request.setAttribute("rectangle", "You must provide length and/or"
+                        + " a height!");
+                return;
+            }
+            // add validation for parse exception, return warning message to 
+            // result page
+            double length = 0;
+            double height = 0;
+            try{
+                length = Double.parseDouble(recLength);
+                height = Double.parseDouble(recHeight);
+            } catch (NumberFormatException nfe){
+                request.setAttribute("rectangle", "You must provide numbers!");
+                return;
+            }
+            if (length > 0 && height > 0){
+                recArea = Double.toString(calculator.getCalculatedAreaRectangle(length, height));
+                request.setAttribute("rectangle", recArea);
+            }
         }
-        if (!(radius.isEmpty())){
-            double cirRadius = Double.parseDouble(radius);
-            circleArea = Double.toString(calculator.getCalculatedAreaCircle(cirRadius));
+               
+        if (circle != null && circle.equals(CIRC_CALC)){
+            radius = request.getParameter("radius");
+            if (radius.isEmpty()){
+                request.setAttribute("circle", "You must provide a radius!");
+                return;
+            }
+            double cirRadius = 0;
+            try {
+                cirRadius = Double.parseDouble(radius);
+            } catch (NumberFormatException nfe){
+                request.setAttribute("circle", "You must provide numbers!");
+                return;
+            }
+            if (cirRadius >0 ){
+                circleArea = Double.toString(calculator.getCalculatedAreaCircle(cirRadius));
+                request.setAttribute("circle", circleArea);
+            }
         }
-        if (!(tBase.isEmpty()) && (!(tHeight.isEmpty()))){
-            double base = Double.parseDouble(tBase);
-            double triHeight = Double.parseDouble(tHeight);
-            triangleArea = Double.toString(calculator.getCalculatedAreaTriangle(base, triHeight));
+        
+        if (triangle != null && triangle.equals(TRI_CALC)){
+            tBase = request.getParameter("base");
+            tHeight = request.getParameter("tHeight");
+            if (tBase.isEmpty() || tHeight.isEmpty()){
+                request.setAttribute("triangle", "You must provide a base and a"
+                        + " height");
+                return;
+            }
+            double base = 0;
+            double triHeight = 0;
+            try {
+                base = Double.parseDouble(tBase);
+                triHeight = Double.parseDouble(tHeight);
+            } catch (NumberFormatException nfe){
+                request.setAttribute("triangle", "You must provide only numbers");
+                return;
+            }
+            if (base > 0 && triHeight > 0){
+                triangleArea = Double.toString(calculator.getCalculatedAreaTriangle(base, triHeight));
+                request.setAttribute("triangle", triangleArea);
+            }
         }
-
-        request.setAttribute("rectangle", recArea);
-        request.setAttribute("circle", circleArea);
-        request.setAttribute("triangle", triangleArea);
+       
         RequestDispatcher view =
             request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);

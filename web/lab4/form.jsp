@@ -1,6 +1,6 @@
 <%-- 
     Document   : form
-    Created on : Jan 27, 2015, 2:41:58 PM
+    Created on : Jan 29, 2015, 2:59:38 PM
     Author     : mdeboer1
 --%>
 
@@ -9,8 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width" initial-scale="1.0">
-        <title>Area Calculator</title>
+        <title>JSP Page</title>
     </head>
     <body>
         <h1>Enter in numbers below to calculate areas of certain shapes</h1>
