@@ -2,14 +2,16 @@
     Document   : form
     Created on : Jan 29, 2015, 2:59:38 PM
     Author     : mdeboer1
+    This lab uses JSTL and EL in place of Java servlets
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Area Calculator</title>
     </head>
     <body>
         <h1>Enter in numbers below to calculate areas of certain shapes</h1>
@@ -22,17 +24,7 @@
                     <label for="height">Height</label>
                     <input id="height" name="height" value=""/>
                     <input type="hidden" id="rectangle" name="rectangle" value="rectangle"/>
-                    <%
-                    String rectangleArea = "";
-                        Object obj = request.getAttribute("rectangle");
-                        if (obj == null){
-                            out.print("");
-                        }
-                        else {
-                            rectangleArea = (String)obj;
-                        }
-                    %>
-                    <h2><%= rectangleArea %></h2>
+                    <h2><c:out value="${rectangle}"></c:out></h2>
                     <input type="submit" id="submit" name="submit" value="Submit"/>
             </fieldset><br>
         </form>
@@ -43,17 +35,7 @@
                         <label for="radius">Radius</label>
                         <input id="radius" name="radius" value=""/><br><br>
                         <input type="hidden" id="circle" name="circle" value="circle"/>
-                        <%
-                            String circleArea = "";
-                            Object obj2 = request.getAttribute("circle");
-                            if (obj2 == null){
-                                out.print("");
-                            }
-                            else {
-                                circleArea = (String)obj2;
-                            }
-                            %>
-                            <h2><%= circleArea%></h2>    
+                        <h2><c:out value="$(circle)"></c:out></h2>    
                         <input type="submit" id="submit" name="submit" value="Submit"/>    
                 </fieldset><br>
             </form>
@@ -66,17 +48,7 @@
                         <label for="tHeight">Height</label>
                         <input id="tHeight" name="tHeight" value=""/>
                         <input type="hidden" id="triangle" name="triangle" value="triangle"/>
-                        <%
-                            String triangleArea = "";
-                            Object obj3 = request.getAttribute("triangle");
-                            if (obj3 == null){
-                                out.print("");
-                            }
-                            else {
-                                triangleArea = (String)obj3;
-                            }
-                        %>
-                        <h2><%= triangleArea%></h2>
+                        <h2><c:out value="$(triangle)"></c:out></h2>
                         <input type="submit" id="submit" name="submit" value="Submit"/>
                 </fieldset><br>
             </form>   

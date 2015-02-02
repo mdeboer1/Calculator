@@ -48,27 +48,19 @@ public class AreaController3 extends HttpServlet {
         String circleArea;
         String triangleArea;
         CalculateArea calculator = new CalculateArea();
+        double length = 0;
+        double height = 0;
         
         if (rectangle != null && rectangle.equals(RECT_CALC)){
-            // add validation to check if empty, set attribute with a warning 
-            // message to be returned to result page
             recLength = request.getParameter("length");
             recHeight = request.getParameter("height");
-            if (recLength.isEmpty() || recHeight.isEmpty()){
-                request.setAttribute("rectangle", "You must provide length and/or"
-                        + " a height!");
-                return;
-            }
-            // add validation for parse exception, return warning message to 
-            // result page
-            double length = 0;
-            double height = 0;
             try{
                 length = Double.parseDouble(recLength);
                 height = Double.parseDouble(recHeight);
             } catch (NumberFormatException nfe){
                 request.setAttribute("rectangle", "You must provide numbers!");
-                return;
+                length = 0;
+                height = 0;
             }
             if (length > 0 && height > 0){
                 recArea = Double.toString(calculator.getCalculatedAreaRectangle(length, height));
@@ -78,18 +70,14 @@ public class AreaController3 extends HttpServlet {
                
         if (circle != null && circle.equals(CIRC_CALC)){
             radius = request.getParameter("radius");
-            if (radius.isEmpty()){
-                request.setAttribute("circle", "You must provide a radius!");
-                return;
-            }
             double cirRadius = 0;
             try {
                 cirRadius = Double.parseDouble(radius);
             } catch (NumberFormatException nfe){
                 request.setAttribute("circle", "You must provide numbers!");
-                return;
+                cirRadius = 0;
             }
-            if (cirRadius >0 ){
+            if (cirRadius > 0 ){
                 circleArea = Double.toString(calculator.getCalculatedAreaCircle(cirRadius));
                 request.setAttribute("circle", circleArea);
             }
@@ -98,11 +86,6 @@ public class AreaController3 extends HttpServlet {
         if (triangle != null && triangle.equals(TRI_CALC)){
             tBase = request.getParameter("base");
             tHeight = request.getParameter("tHeight");
-            if (tBase.isEmpty() || tHeight.isEmpty()){
-                request.setAttribute("triangle", "You must provide a base and a"
-                        + " height");
-                return;
-            }
             double base = 0;
             double triHeight = 0;
             try {
@@ -110,7 +93,8 @@ public class AreaController3 extends HttpServlet {
                 triHeight = Double.parseDouble(tHeight);
             } catch (NumberFormatException nfe){
                 request.setAttribute("triangle", "You must provide only numbers");
-                return;
+                base = 0;
+                base = 0;
             }
             if (base > 0 && triHeight > 0){
                 triangleArea = Double.toString(calculator.getCalculatedAreaTriangle(base, triHeight));
