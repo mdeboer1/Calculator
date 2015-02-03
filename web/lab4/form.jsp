@@ -24,7 +24,7 @@
                     <label for="height">Height</label>
                     <input id="height" name="height" value=""/>
                     <input type="hidden" id="rectangle" name="rectangle" value="rectangle"/>
-                    <h2><c:out value="${rectangle}"></c:out></h2>
+                    <h2>${rectangle}</h2>
                     <input type="submit" id="submit" name="submit" value="Submit"/>
             </fieldset><br>
         </form>
@@ -35,7 +35,7 @@
                         <label for="radius">Radius</label>
                         <input id="radius" name="radius" value=""/><br><br>
                         <input type="hidden" id="circle" name="circle" value="circle"/>
-                        <h2><c:out value="$(circle)"></c:out></h2>    
+                        <h2>${circle}</h2>    
                         <input type="submit" id="submit" name="submit" value="Submit"/>    
                 </fieldset><br>
             </form>
@@ -48,7 +48,7 @@
                         <label for="tHeight">Height</label>
                         <input id="tHeight" name="tHeight" value=""/>
                         <input type="hidden" id="triangle" name="triangle" value="triangle"/>
-                        <h2><c:out value="$(triangle)"></c:out></h2>
+                        <h2>${triangle}</h2>
                         <input type="submit" id="submit" name="submit" value="Submit"/>
                 </fieldset><br>
             </form>   
